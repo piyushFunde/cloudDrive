@@ -1,0 +1,120 @@
+# =============================================
+# CloudDrive Backend — Application Configuration
+# =============================================
+
+spring:
+  profiles:
+    active: dev
+
+# ===== Common Configuration =====
+app:
+  jwt:
+    secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+    expiration: 86400000   # 24 hours in ms
+    refresh-expiration: 604800000 # 7 days in ms
+  storage:
+    provider: ${STORAGE_PROVIDER:local}  # local | s3
+    local:
+      upload-dir: ${LOCAL_UPLOAD_DIR:./uploads}
+      base-url: ${LOCAL_BASE_URL:http://localhost:8080}
+    s3:
+      bucket: ${AWS_S3_BUCKET:clouddrive-files}
+      region: ${AWS_REGION:us-east-1}
+      access-key: ${AWS_ACCESS_KEY_ID:}
+      secret-key: ${AWS_SECRET_ACCESS_KEY:}
+      presigned-url-expiry: 3600   # 1 hour in seconds
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:5173,http://localhost:3000}
+  max-file-size: ${MAX_FILE_SIZE:524288000}  # 500MB in bytes
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+
+# =============================================
+# DEV Profile — H2 in-memory + local storage
+# =============================================
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    url: jdbc:h2:mem:clouddrivedb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: false
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 500MB
+      max-request-size: 510MB
+
+logging:
+  level:
+    com.cloudstorage: DEBUG
+    org.springframework.security: INFO
+    org.hibernate.SQL: DEBUG
+
+# =============================================
+# PROD Profile — PostgreSQL + AWS S3
+# =============================================
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/clouddrivedb}
+    username: ${DATABASE_USERNAME:clouddrive}
+    password: ${DATABASE_PASSWORD:clouddrive_secret}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 300000
+      connection-timeout: 20000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 50
+        order_inserts: true
+        order_updates: true
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 500MB
+      max-request-size: 510MB
+
+logging:
+  level:
+    com.cloudstorage: INFO
+    org.springframework.security: WARN
