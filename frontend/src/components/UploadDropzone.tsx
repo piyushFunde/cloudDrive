@@ -19,13 +19,12 @@ export default function UploadDropzone() {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    noClick: true, // Let them click separate upload button or drag/drop anywhere on window
   })
 
   return (
     <div
       {...getRootProps()}
-      className={`relative w-full border-2 border-dashed rounded-xl2 transition-all p-8 flex flex-col items-center justify-center text-center ${
+      className={`relative w-full border-2 border-dashed rounded-xl2 transition-all p-8 flex flex-col items-center justify-center text-center cursor-pointer ${
         isDragActive
           ? 'border-primary bg-primary/5 shadow-glow-sm'
           : 'border-border hover:border-white/20 bg-surface/30'
@@ -36,7 +35,7 @@ export default function UploadDropzone() {
         <UploadCloud className={`h-8 w-8 ${isDragActive ? 'text-primary' : 'text-text-secondary animate-pulse-soft'}`} />
       </div>
       <p className="text-xs font-semibold text-white mb-1">
-        {isDragActive ? 'Drop files here...' : 'Drag and drop files to upload'}
+        {isDragActive ? 'Drop files here...' : 'Click or drag & drop files to upload'}
       </p>
       <p className="text-[10px] text-text-muted">
         Direct upload limit of 500MB per file

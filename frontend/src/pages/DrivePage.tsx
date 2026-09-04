@@ -4,6 +4,7 @@ import { Grid, List, Plus, FolderPlus, UploadCloud, ChevronDown } from 'lucide-r
 import { useFolders } from '../hooks/useFolders'
 import { useFiles } from '../hooks/useFiles'
 import { useUIStore } from '../store/uiStore'
+import { useUpload } from '../hooks/useUpload'
 import Breadcrumb from '../components/layout/Breadcrumb'
 import FileGrid from '../components/FileGrid'
 import FileList from '../components/FileList'
@@ -20,6 +21,7 @@ export default function DrivePage() {
   const { contents, isLoadingContents, deleteFolder } = useFolders(folderId)
   const { deleteFile, toggleStar } = useFiles()
   const { viewMode, setViewMode, setCreateFolderOpen } = useUIStore()
+  const { uploadFile } = useUpload()
 
   // Click handler to open upload file picker
   const fileInputRef = React.useRef<HTMLInputElement>(null)
@@ -28,14 +30,10 @@ export default function DrivePage() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
     if (files && files.length > 0) {
-      // Simulate drop action manually to leverage useUpload logic
-      const dropzoneInput = document.querySelector('input[type="file"]') as HTMLInputElement
-      if (dropzoneInput) {
-        const dataTransfer = new DataTransfer()
-        Array.from(files).forEach((f) => dataTransfer.items.add(f))
-        dropzoneInput.files = dataTransfer.files
-        dropzoneInput.dispatchEvent(new Event('change', { bubbles: true }))
-      }
+      Array.from(files).forEach((file) => {
+        uploadFile({ file, folderId })
+      })
+      e.target.value = ''
     }
   }
 
