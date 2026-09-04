@@ -2,6 +2,9 @@
 # CloudDrive Backend — Application Configuration
 # =============================================
 
+server:
+  port: ${PORT:8080}
+
 spring:
   profiles:
     active: dev
@@ -24,7 +27,7 @@ app:
       secret-key: ${AWS_SECRET_ACCESS_KEY:}
       presigned-url-expiry: 3600   # 1 hour in seconds
   cors:
-    allowed-origins: ${CORS_ORIGINS:http://localhost:5173,http://localhost:3000}
+    allowed-origins: ${CORS_ORIGINS:http://localhost:5173,http://localhost:3000,https://*.vercel.app}
   max-file-size: ${MAX_FILE_SIZE:524288000}  # 500MB in bytes
 
 springdoc:
