@@ -1,24 +1,24 @@
-# ☁️ CloudDrive — Cloud-Based File Storage Service
+# CloudDrive — Cloud-Based File Storage Service
 
 A production-quality, Google Drive-inspired cloud file storage and sharing web application built with **Java Spring Boot** and **React**.
 
 ---
 
-## ✨ Features
+## Features
 
-- 🔐 JWT Authentication + Google OAuth (Phase 2)
-- 📁 Nested folder management
-- 📤 Presigned URL file uploads (direct-to-storage)
-- 🔗 File sharing with roles (Viewer / Editor)
-- 🌐 Public share links with expiry & optional password
-- ⭐ Starred files
-- 🗑️ Trash & restore (soft delete)
-- 🔍 Full-text search with filters
-- 📊 Storage usage tracking
+- JWT Authentication + Google OAuth (Phase 2)
+- Nested folder management
+- Presigned URL file uploads (direct-to-storage)
+- File sharing with roles (Viewer / Editor)
+- Public share links with expiry & optional password
+- Starred files
+- Trash & restore (soft delete)
+- Full-text search with filters
+- Storage usage tracking
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
@@ -33,7 +33,7 @@ A production-quality, Google Drive-inspired cloud file storage and sharing web a
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Java 17+
@@ -69,7 +69,7 @@ Frontend runs at: `http://localhost:5173`
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Backend — `backend/src/main/resources/application.yml`
 
@@ -93,7 +93,7 @@ VITE_API_BASE_URL=http://localhost:8080/api
 
 ---
 
-## 📡 API Endpoints
+## API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -115,7 +115,7 @@ Full documentation available at `/swagger-ui.html` when backend is running.
 
 ---
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 CloudDrive/
@@ -126,7 +126,7 @@ CloudDrive/
 
 ---
 
-## 📋 Development Roadmap
+##  Development Roadmap
 
 ### MVP (Current)
 - [x] Auth (JWT)
@@ -145,6 +145,3 @@ CloudDrive/
 - [ ] Desktop sync client
 
 ---
-
-## 📄 License
-MIT License — See [LICENSE](LICENSE)
